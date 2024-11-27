@@ -36,4 +36,19 @@ public class Visitor extends Person {
     public void setRecentSurgery(boolean recentSurgery) {
         isRecentSurgery = recentSurgery;
     }
+
+    @Override
+    public String toString() {
+        return "Visitor{" +
+                "name=" + super.getName() +
+                ", sex=" + super.getSex() +
+                ", phoneNumber=" + super.getPhoneNumber() +
+                ", height=" + height +
+                ", isRecentSurgery=" + isRecentSurgery +
+                '}';
+    }
+
+    public String toCSV() {
+        return super.getName() + "," + super.getSex() + "," + super.getPhoneNumber() + "," + height + "," + isRecentSurgery;
+    }
 }

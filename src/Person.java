@@ -1,7 +1,7 @@
 /**
  * Person.java
  */
-public class Person {
+public abstract class Person {
 
     /**
      * The name
@@ -51,5 +51,14 @@ public class Person {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }
