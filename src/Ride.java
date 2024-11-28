@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Ride.java
@@ -31,14 +33,19 @@ public class Ride implements RideInterface {
     // numOfCycles
     private int numOfCycles;
 
+    private Lock lock;
+
 
     public Ride() {
+        this.lock = new ReentrantLock();
     }
 
     public Ride(Employee employee, String playItem, String riderRequirements) {
         this.employee = employee;
         this.playItem = playItem;
         this.riderRequirements = riderRequirements;
+
+        this.lock = new ReentrantLock();
     }
 
     /*
@@ -107,16 +114,20 @@ public class Ride implements RideInterface {
 
     @Override
     public void runOneCycle() {
-
-        for (int i = 0; i < maxRider; i++) {
-            Visitor visitor = queue.poll();
-            if (visitor != null) {
-                addVisitorToHistory(visitor);
+        lock.lock();
+        try {
+            for (int i = 0; i < maxRider; i++) {
+                Visitor visitor = queue.poll();
+                if (visitor != null) {
+                    addVisitorToHistory(visitor);
+                }
             }
-        }
 
-        numOfCycles++;
-        System.out.println("runOneCycle success. numOfCycles = " + numOfCycles);
+            numOfCycles++;
+            System.out.println("runOneCycle success. numOfCycles = " + numOfCycles);
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
